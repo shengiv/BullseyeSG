@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://kit.fontawesome.com/f1ac1dd72f.js" crossorigin="anonymous"></script>
+    <title>BullseyeSG</title>
+    <style>
+        .page {
+            display: block;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            border-bottom: 1px;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            border-color: rgb(196, 194, 194);
+            border-style: solid;
+
+        }
+
+        .title {
+            font-family: Impact;
+            font-weight: 500;
+            font-size: xx-large;
+            margin-top: 0;
+            margin-right: 50px;
+            margin-bottom: 0;
+            width: 200px;
+        }
+
+        .title-description {
+            font-family: Calibri;
+            font-weight: 200;
+            color: grey;
+            margin-bottom: 0;
+            width: 100%;
+            flex: 1;
+        }
+
+        .body {
+            display: flex;
+            flex-direction: row;
+            margin-top: 50px;
+        }
+
+        .buttons {
+            height: 100%;
+            width: 300px;
+            margin-right: 5px;
+        }
+
+        .map {
+            height: 600px;
+            width: 100%;
+            border: 1px;
+            border-style: solid;
+            border-color: black;
+        }
+        .input-1{
+            margin-bottom: 15px;
+
+        }
+        .input-2{
+            margin-bottom: 10px;
+        }
+        .add{
+            
+            border:none;
+            background-color: white;
+            font-size: 30px;
+            cursor:pointer;
+            display:block;
+            margin-bottom: 400px;
+        }
+        .Search{
+            font-size:20px;
+            border-radius:6px;
+            background-color: rgb(21, 212, 145);
+            cursor: pointer;
+            color:aliceblue
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+    <div class="page">
+        <div class="header">
+            <p class="title">
+                BullseyeSG
+            </p>
+            <p class="title-description">
+                Find a suitable place to meet that's fair for everyone!
+            </p>
+        </div>
+        <div class="body">
+            <div class="buttons">
+                <div class="input-1">
+                    <input type="text" placeholder="Enter location" size="30" style="height:40px;font-size:12pt;">
+                </div>
+                <div class="input-2">
+                    <input type="text" placeholder="Enter second location" size = "30" style="height:40px;font-size:12pt;">
+                </div>
+
+                <button class = "add">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </button>
+                
+                <button class = "Search">Find a place to meet</button>
+
+            </div>
+            <div class="map">
+
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
