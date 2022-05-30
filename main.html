@@ -3,6 +3,7 @@
 
 <head>
     <script src="https://kit.fontawesome.com/f1ac1dd72f.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>BullseyeSG</title>
     <style>
         .page {
@@ -52,37 +53,40 @@
             margin-right: 5px;
         }
 
-        .map {
+        #map {
             height: 600px;
             width: 100%;
             border: 1px;
             border-style: solid;
             border-color: black;
         }
-        .input-1{
+
+        .input-1 {
             margin-bottom: 15px;
 
         }
-        .input-2{
+
+        .input-2 {
             margin-bottom: 10px;
         }
-        .add{
-            
-            border:none;
+
+        .add {
+
+            border: none;
             background-color: white;
             font-size: 30px;
-            cursor:pointer;
-            display:block;
+            cursor: pointer;
+            display: block;
             margin-bottom: 400px;
         }
-        .Search{
-            font-size:20px;
-            border-radius:6px;
+
+        .Search {
+            font-size: 20px;
+            border-radius: 6px;
             background-color: rgb(21, 212, 145);
             cursor: pointer;
-            color:aliceblue
+            color: aliceblue
         }
-
     </style>
 
 
@@ -101,26 +105,96 @@
         <div class="body">
             <div class="buttons">
                 <div class="input-1">
-                    <input type="text" placeholder="Enter location" size="30" style="height:40px;font-size:12pt;">
+                    <input id="location-1" type="text" placeholder="Enter location" size="30"
+                        style="height:40px;font-size:12pt;">
                 </div>
                 <div class="input-2">
-                    <input type="text" placeholder="Enter second location" size = "30" style="height:40px;font-size:12pt;">
+                    <input type="text" placeholder="Enter second location" size="30"
+                        style="height:40px;font-size:12pt;">
                 </div>
 
-                <button class = "add">
+                <button class="add">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 </button>
-                
-                <button class = "Search">Find a place to meet</button>
+
+                <button onclick="geocode()" class="Search">Find a place to meet</button>
 
             </div>
-            <div class="map">
+            <div id="map">
 
             </div>
 
         </div>
     </div>
+    <script>
+        function initMap() {
+            var options = {
+                zoom: 10,
+                center: { lat: 1.3521, lng: 103.8198 }
+            }
+            var map = new google.maps.Map(document.getElementById('map'), options);
+        }
 
+
+        function geocode() {
+            var input1 = document.getElementById('location-1').value + ' ' + 'SG';
+            axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+
+                params: {
+                    address: input1,
+                    key: 'AIzaSyDFR0seyb_LY92JNbiZZgairVUDa9hB08g'
+                }
+            })
+                .then(function (response) {
+                    //console.log(response);
+                    var lat = response.data.results[0].geometry.location.lat;
+                    var lng = response.data.results[0].geometry.location.lng;
+                    var options = {
+                        zoom: 10,
+                        center: { lat: 1.3521, lng: 103.8198 }
+                    }
+                    var map = new google.maps.Map(document.getElementById('map'), options);
+                    var marker = new google.maps.Marker({
+                        position: { lat: lat, lng: lng },
+                        map: map
+                    });
+                    console.log('Latitude: ' + lat);
+                    console.log('Longitude: ' + lng);
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+        travelling_time();
+        function travelling_time() {
+            var origin = '1.3505, 103.8727';
+            var destination = '1.3779, 103.9024';
+            axios.get('https://maps.googleapis.com/maps/api/directions/json', {
+                 headers: {
+                     'Access-Control-Allow-Origin': '*',
+                     'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+                },
+                params: {
+                    origin: origin,
+                    destination: destination,
+
+                    mode: 'transit',
+                    key: 'AIzaSyDjajRmEHaQUVqerMZiX_IS8dJ2yGY08KM'
+                },
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    </script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxtJrPA61-t7dKjKHyBnxOPtmXY9nX2mk&callback=initMap">
+        </script>
 
 </body>
 
