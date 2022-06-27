@@ -43,6 +43,7 @@ form {
     height: 100%;
     width: 300px;
     margin-right: 50px;
+
 }
 
 #map {
@@ -58,26 +59,22 @@ form {
     display: flex;
 }
 
-/* .input-2 {
+
+
+select {
     margin-bottom: 10px;
-} */
-
-/* .add {
-
-    border: none;
-    background-color: white;
-    font-size: 30px;
-    cursor: pointer;
+    margin-top: 10px;
     display: block;
-    margin-bottom: 400px;
-} */
+    
+  }
 
 .Search {
     font-size: 20px;
     border-radius: 6px;
     background-color: rgb(21, 212, 145);
     cursor: pointer;
-    color: aliceblue
+    color: aliceblue;
+
 }
 
 .inputs span {

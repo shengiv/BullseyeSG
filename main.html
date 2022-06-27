@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-	<!-- The meta viewport will scale my content to any device width -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The meta viewport will scale my content to any device width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="styles.css"> 
-    
+    <link rel="stylesheet" href="styles.css">
+
     <script src="https://kit.fontawesome.com/f1ac1dd72f.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>BullseyeSG</title>
@@ -28,18 +28,20 @@
                 <div class="inputs">
                     <input id="location-1" type="text" placeholder="Enter location" name="locations[]" size="30"
                         style="height:40px;font-size:12pt;">
-                    <span onclick = "add_input(this)">+</span>
-                    <span onclick = "remove_input(this)">-</span>
+                    <span onclick="add_input(this)">+</span>
+                    <span onclick="remove_input(this)">-</span>
                 </div>
 
-                <!-- <div class="input-2">
-                    <input id="location-2" type="text" placeholder="Enter another location" size="30"
-                        style="height:40px;font-size:12pt;">
-                </div> -->
 
-                <!-- <button class="add">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                </button> -->
+                <select name="mode_selector" id="mode">
+                    <option value="Meet@Where">Select mode</option>
+                    <option value="Meet@Where">Meet@Where</option>
+                    <option value="Eat@Where">Eat@Where</option>
+                    <option value="Adventure@Where">Adventure@Where</option>
+                    <option value="Study@Where">Study@Where</option>
+                </select>
+
+
 
                 <button type="submit" class="Search">Find a place to meet</button>
 

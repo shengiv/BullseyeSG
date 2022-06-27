@@ -1,6 +1,6 @@
 let form = document.forms[0];
 
-let displayButton = document.querySelector("form button");
+let displayButton = document.querySelector("form select");
 
 var num = 1;
 let locations = [];
@@ -8,6 +8,8 @@ var midpoint_lat = 1.3521; //midpoint between starting locations
 var midpoint_long = 103.819;
 var filtered_malls = [];
 let locat_coords = [];
+var modeNum = 1;
+
 
 function add_input(element) {
     let div = document.createElement("div");
@@ -46,14 +48,33 @@ function remove_input(element) {
 
 
 
-form.onsubmit = async function (event) {
+form.onsubmit = async function (event) { //issue here?
+    // await selected();
     event.preventDefault();
     let data = new FormData(form);
+    console.log(data);
     data.forEach(function (value) {
-        if (value !== "") {
+        if ((value !== "") && (value !== 'Meet@Where') && (value !== 'Eat@Where') && (value !== 'Adventure@Where') && (value !== 'Study@Where')) {
             locations.push(value);
+            console.log(value);
+
+        }
+        else if ((value == 'Meet@Where') || (value == 'Eat@Where') || (value == 'Adventure@Where') || (value == 'Study@Where')) {
+            if (value == 'Meet@Where') {
+                modeNum = 1;
+            }
+            else if (value == 'Eat@Where') {
+                modeNum = 2;
+            }
+            else if(value == 'Adventure@Where') {
+                modeNum = 3;
+            }
+            else {
+                modeNum = 4;
+            }
         }
     });
+
     await convert_to_coords(); //convert the input locations to coordinates and store in array locat_coords
 
     //////////Code below is for calculating average midpoint between user input locations////////////
@@ -67,9 +88,36 @@ form.onsubmit = async function (event) {
     midpoint_long = long_sum / locat_coords.length;
     //////////Code above is for calculating average midpoint between user input locations////////////
 
+    if(modeNum == 1){
     filter_malls(); //if meet@where filter malls within a certain radius
     meetup_location();
+    }
+    else if(modeNum == 2){
+        console.log('Eat');
+    }
+    else if(modeNum == 3){
+        console.log('Adventure');
+    }
+    else{
+        console.log('Study');
+    }
 }
+
+// async function selected(){
+//     var selectobject = document.getElementById("mode");
+//     if (selectobject.value == 'Meet@Where') {
+//         modeNum = 1;
+//     }
+//     else if (selectobject.value == 'Eat@Where') {
+//         modeNum = 2;
+//     }
+//     else if (selectobject.value == 'Adventure@Where') {
+//         modeNum = 3;
+//     }
+//     else {
+//         modeNum = 4;
+//     }
+// }
 
 async function convert_to_coords() {
     for (let k = 0; k < locations.length; k++) {
@@ -108,12 +156,10 @@ function filter_malls() {
             Math.sin(Lng_diff / 2) * Math.sin(Lng_diff / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var diff = R * c;
-        if(diff<4){
+        if (diff < 4) {
             filtered_malls.push(mall_locat);
         }
     }
-
-
 }
 
 
@@ -194,16 +240,12 @@ async function travelling_time(start, end) {
 
 
 async function meetup_location() {
-    //var point1 = document.getElementById('location-1').value + ' ' + 'SG';
-    //var point2 = document.getElementById('location-2').value + ' ' + 'SG';
-    // travelling_time(point1, malls[2] + ' ' + 'SG');
-    // travelling_time(point2, malls[2] + ' ' + 'SG');
     var meetup = [{ location: 'default', duration: 19000 }];
     for (let i = 0; i < filtered_malls.length; i++) {
         var total_duration = 0;
         for (let j = 0; j < locations.length; j++) {
             let locat = locations[j] + ' ' + 'SG';
-            console.log(i);
+            //console.log(i);
             let duration = await travelling_time(locat, filtered_malls[i]);
             total_duration += duration;
         }
