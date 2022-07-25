@@ -3,6 +3,7 @@ const app = express()
 const axios = require('axios')
 const cors = require('cors')
 require('dotenv').config()
+const port = process.env.PORT || 5000
 
 app.use(cors({
     origin: '*'
@@ -29,4 +30,4 @@ app.get(':endpoint([\\/\\w\\.-]*)', function(req, res){
     })
 })
 
-app.listen(3000)
+app.listen(port)

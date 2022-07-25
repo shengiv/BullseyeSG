@@ -222,8 +222,8 @@ async function geocode(location) {
 async function travelling_time(start, end) {
     try {
         //var response = await axios.get('https://maps.googleapis.com/maps/api/directions/json?origin='+start+'&destination='+end+'&mode=transit'+'&key=AIzaSyBit3gJOMo0EUKqLZZJWaJ21nfO0jbUzFg');
-        var response = await axios.get('http://localhost:3000/json?origin='+start+'&destination='+end+'&mode=transit'); //use data destructuring to get data from the promise object
-        console.log('http://localhost:3000/origin='+start+'&destination='+end+'&mode=transit')
+        var response = await axios.get('https://nodejs-proxy-serverr.herokuapp.com/json?origin='+start+'&destination='+end+'&mode=transit'); //use data destructuring to get data from the promise object
+        console.log('https://nodejs-proxy-serverr.herokuapp.com/json?origin='+start+'&destination='+end+'&mode=transit')
         return response.data.routes[0].legs[0].duration.value;
     }
 
