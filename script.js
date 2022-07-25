@@ -9,7 +9,18 @@ var midpoint_long = 103.819;
 var filtered_malls = [];
 let locat_coords = [];
 var modeNum = 1;
+const loaderContainer = document.querySelector('.loader-container');
 
+// window.addEventListener('load', () => {
+//     loaderContainer.style.display = 'none';
+// });
+const displayLoading = () => {
+    loaderContainer.style.display = 'block';
+};
+
+const hideLoading = () => {
+    loaderContainer.style.display = 'none';
+};
 
 function add_input(element) {
     let div = document.createElement("div");
@@ -49,6 +60,7 @@ function remove_input(element) {
 
 
 form.onsubmit = async function (event) { //issue here?
+    displayLoading();
     // await selected();
     event.preventDefault();
     let data = new FormData(form);
@@ -254,6 +266,7 @@ async function meetup_location() {
     filtered_malls = [];
     locat_coords = [];
     //console.log(meetup[0].location);
+    hideLoading();
     geocode(meetup[0].location);
 }
 
