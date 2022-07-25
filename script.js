@@ -10,6 +10,8 @@ var filtered_malls = [];
 let locat_coords = [];
 var modeNum = 1;
 const loaderContainer = document.querySelector('.loader-container');
+var lats = 0;
+var longs = 0;
 
 // window.addEventListener('load', () => {
 //     loaderContainer.style.display = 'none';
@@ -78,7 +80,7 @@ form.onsubmit = async function (event) { //issue here?
             else if (value == 'Eat@Where') {
                 modeNum = 2;
             }
-            else if(value == 'Adventure@Where') {
+            else if (value == 'Adventure@Where') {
                 modeNum = 3;
             }
             else {
@@ -100,19 +102,8 @@ form.onsubmit = async function (event) { //issue here?
     midpoint_long = long_sum / locat_coords.length;
     //////////Code above is for calculating average midpoint between user input locations////////////
 
-    if(modeNum == 1){
     filter_malls(); //if meet@where filter malls within a certain radius
     meetup_location();
-    }
-    else if(modeNum == 2){
-        console.log('Eat');
-    }
-    else if(modeNum == 3){
-        console.log('Adventure');
-    }
-    else{
-        console.log('Study');
-    }
 }
 
 // async function selected(){
@@ -213,6 +204,7 @@ async function geocode(location) {
             //console.log(response);
             var lat = response.data.results[0].geometry.location.lat;
             var lng = response.data.results[0].geometry.location.lng;
+
             var options = {
                 zoom: 10,
                 center: { lat: 1.3521, lng: 103.8198 }
@@ -234,8 +226,8 @@ async function geocode(location) {
 async function travelling_time(start, end) {
     try {
         //var response = await axios.get('https://maps.googleapis.com/maps/api/directions/json?origin='+start+'&destination='+end+'&mode=transit'+'&key=AIzaSyBit3gJOMo0EUKqLZZJWaJ21nfO0jbUzFg');
-        var response = await axios.get('https://nodejs-proxy-serverr.herokuapp.com/json?origin='+start+'&destination='+end+'&mode=transit'); //use data destructuring to get data from the promise object
-        console.log('https://nodejs-proxy-serverr.herokuapp.com/json?origin='+start+'&destination='+end+'&mode=transit')
+        var response = await axios.get('https://nodejs-proxy-serverr.herokuapp.com/json?origin=' + start + '&destination=' + end + '&mode=transit'); //use data destructuring to get data from the promise object
+        console.log('https://nodejs-proxy-serverr.herokuapp.com/json?origin=' + start + '&destination=' + end + '&mode=transit')
         return response.data.routes[0].legs[0].duration.value;
     }
 
@@ -266,7 +258,32 @@ async function meetup_location() {
     filtered_malls = [];
     locat_coords = [];
     //console.log(meetup[0].location);
+    var LatLngs = meetup[0].location.split(",");
+    lats = parseFloat(LatLngs[0]);
+    longs = parseFloat(LatLngs[1]);
     hideLoading();
-    geocode(meetup[0].location);
+
+    if (modeNum == 1) {
+        geocode(meetup[0].location);
+    }
+    else if (modeNum == 2) { 
+        var link = 'https://www.google.com/maps/search/Restaurants/@'+ lats + ',' + longs;
+        location.href = link;
+        console.log(lats);
+        console.log(longs);
+    }
+    else if (modeNum == 3) {
+        console.log('Adventure');
+
+        var link = 'https://www.google.com/maps/search/hike+and+recreation/@'+ lats + ',' + longs;
+        location.href = link;
+    }
+    else {
+        console.log('Study');
+
+        var link = 'https://www.google.com/maps/search/study+spot/@'+ lats + ',' + longs;
+        location.href = link;
+    }
 }
+
 
